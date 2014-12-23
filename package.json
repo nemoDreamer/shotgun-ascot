@@ -25,7 +25,8 @@
     "hubot-hipchat": "^2.7.5",
     "hubot-pager-me": "^2.0.2",
     "hubot-help": "^0.1.1",
-    "hubot-scripts": "^2.5.16"
+    "hubot-scripts": "^2.5.16",
+    "moment": "1.6.2"
   },
   "engines": {
     "node": "0.x.x",
