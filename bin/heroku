@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# Note: this script does not replace the Heroku Toolkit CLI,
+#       but provides a helpful wrapper to its API
+
+# Usage
+# ==================================================
+
+function usage {
+    echo "
+    Usage:
+        heroku {task(s)}
+    Tasks:
+        restart: Restart all dynos
+    "
+    exit 1
+}
+
+# No params?
+! (($#)) && usage
+
+# Setup
+# ==================================================
+
+APP_ID_OR_NAME=$( heroku apps:info -s | grep "^name=" | sed s/name=// )
+API_URL='https://api.heroku.com'
+API_KEY=$( heroku auth:token )
+BAD_TASK=false
+
+echo "App: $APP_ID_OR_NAME (API key: $API_KEY)"
+
+# Tasks
+# ==================================================
+
+for i in "$@"
+do
+case $i in
+
+# Restart all dynos
+# --------------------------------------------------
+restart)
+    echo "Restarting all dynos..."
+    curl -n -X DELETE $API_URL/apps/$APP_ID_OR_NAME/dynos \
+        -H "Accept: application/vnd.heroku+json; version=3" \
+        -H "Authorization: Bearer $API_KEY"
+    echo "Done."
+    shift
+    ;;
+
+# Bad task?
+# --------------------------------------------------
+*)
+    echo "Task '$i' does not exist!"
+    usage
+    ;;
+
+esac
+done
+
