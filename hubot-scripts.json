@@ -3,7 +3,6 @@
   "ip.coffee",
   "isup.coffee",
   "jenkins.coffee",
-  "pagerduty.coffee",
   "redis-brain.coffee",
   "working-on.coffee",
   "zendesk.coffee"
