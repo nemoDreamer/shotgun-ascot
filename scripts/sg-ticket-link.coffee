@@ -28,5 +28,9 @@ module.exports = (robot) ->
     if isNaN(ticket_number)
       return
     
-    shotgun_url = process.env.HUBOT_SHOTGUN_URL
-    msg.send "#{shotgun_url}/detail/Ticket/#{ticket_number}"
+    if msg.message.match(/ZD#(\d+)/)
+      zendesk_url = process.env.HUBOT_ZENDESK_TICKET_URL
+      msg.send "#{zendesk_url}#{ticket_number}"
+    else
+      shotgun_url = process.env.HUBOT_SHOTGUN_URL
+      msg.send "#{shotgun_url}/detail/Ticket/#{ticket_number}"
