@@ -23,10 +23,11 @@ module.exports = (robot) ->
 
   robot.hear /\s+#(\d+)/, (msg) ->
     return if msg.message.user.name.match(new RegExp(githubIgnoreUsers, "gi"))
-    
+    return if msg.message.match(/pull request #/i)
+
     ticket_number = msg.match[1]
     if isNaN(ticket_number)
       return
-    
+
     shotgun_url = process.env.HUBOT_SHOTGUN_URL
     msg.send "#{shotgun_url}/detail/Ticket/#{ticket_number}"
