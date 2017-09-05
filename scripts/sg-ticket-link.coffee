@@ -33,7 +33,7 @@ module.exports = (robot) ->
     zendesk: "#{process.env.HUBOT_ZENDESK_TICKET_URL}"
     github: "#{process.env.HUBOT_GITHUB_URL}/pull"
 
-  robot.hear /\s+(.*)#(\d+)/i, (msg) ->
+  robot.hear /\s+(\w*)#(\d{4,})/i, (msg) ->
     return if msg.message.user.name.match(new RegExp(githubIgnoreUsers, "gi"))
 
     [match, prefix, number] = msg.match
